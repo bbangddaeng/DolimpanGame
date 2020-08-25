@@ -6,7 +6,7 @@
     exit;
   }
   $id = $_SESSION['id'];
-
+  $chk = false;
   //
   // $query = "select * from member2 where mb_id=$_SSESSION['id'] and mb_dolim";
   // $result = mysqli_query($con, $query);
@@ -26,7 +26,7 @@
     <script src="http://jqueryrotate.com/jQueryRotateCompressed.js"></script>
     <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 
-    <script>var ang=0; var final_ang = 0; isPause = true;</script>
+    <script>var save_chk = false; var ang=0; var final_ang = 0; isPause = true;</script>
     <br>
 
     <strong><script> document.write("<?php echo $_SESSION['name'];?>")</script></strong>님 안녕하세요!!
@@ -132,9 +132,9 @@
       <img id = "dir"style="width:50px;height:50px;left:276px;top:78px;"src = "https://t1.daumcdn.net/cfile/tistory/0360BE3D5083FDF621"></img>
     </div>
 
-    <div id="target" style="width:600px;height:600px;overflow:hidden;"class = "hc vc"></div>
+    <div id="target" style="overflow:hidden;width:600px;height:600px;"class = "hc vc"></div>
 
-    <div style="z-index:16;width:600px;height:600px;overflow:hidden;left:200px;" class = "hc vc">
+    <div style="z-index:16;width:600px;height:600px;overflow:visible;left:200px;" class = "hc vc">
       <input style="width:33.5%;"class = "button" id = "btn" type ="button" value =" 돌려돌려 돌림판!   " onclick="if(t.length <=2){alert('최소 2개이상 넣으세요.');return;}
       processing(); "></input>
 
@@ -178,18 +178,25 @@
       <input maxlength ="7"placeholder="입력하시오." style="height:6%;width:22.25%;text-align:center;"type ="text" id ="inp" value=""/>
       <br><br>
 
-      <form style="display:inline;margin-left:12px;"action = "logout.php" method="post" >
+      <bx style="overflow:visible;margin-left:-18px;">
+      <form style="display:inline;"action = "logout.php" method="post" >
         <!-- <input name = "save" id = "save" type = "hidden" value= ""> -->
-        <button name = "save" id = "save" onclick = "insert(save_t, ang);"style="margin-right:10px;">로그아웃</button>
+        <button class = "bx" name = "save" id = "save" onclick = "insert(save_t, ang);"style="left:100px;margin-right:0px;">로그아웃</button>
         <input type = "hidden" id = "rad" name = "rad" value = ""/>
       </form>
 
       <form  style="display:inline;" action = "change.php" method="post" >
-        <button style="margin-right:10px;" name = "change" id = "change" style="margin-left:0px;">회원정보수정</button>
+        <button class = "bx" style="margin-right:0px;margin-left:0px;" name = "change" id = "change">회원정보수정</button>
       </form>
+      <form style="display:inline;" action="state_save.php" method="post">
+        <button class = "bx" onclick="save_list(save_t, ang)" style="margin-right:0px;" name = "list_save"
+        id = "list_save" style="margin-left:0px;" value="">상태저장</button>
+        <input type="hidden" id = "rad_save" name = "rad_save" value=""/>
+      </form>
+      </bx>
       <br><br>
       <!-- <br><br> -->
-      <label ondragstart="return false" contextmenu = "return false" onselectstart="return false">Made by <strong>박장군</strong></label>
+      <label style="margin-left:40px;"ondragstart="return false" contextmenu = "return false" onselectstart="return false">Made by <strong>박장군</strong></label>
     </div>
 
     <script>
@@ -200,6 +207,7 @@
       $("#dir").rotate(90);
       $("[id=inp]").css("border","#4CAF50 3px solid");
       $("#stop").css("cursor","pointer");
+      $(".bx").css("cursor","pointer");
       document.getElementById("inp").focus();
 
       $("#inp" ).keyup(function(e){
@@ -309,6 +317,8 @@
       setTimeout(() => clk = true,3600);
       setTimeout(() => stopCheck = true,3600);
       setTimeout("isPause = true;",3600);
+      setTimeout("$('.bx').attr('disabled', false)",3600);
+      setTimeout("$('.bx').css('cursor','pointer');",3600);
       //setTimeout(() => alert("radian : " + ang),3600);
     }
 
@@ -320,6 +330,8 @@
           $("#stop").css("cursor","pointer");
           $("#inp").css("cursor","no-drop");
           $("#inp").attr("disabled",true);
+          $(".bx").css("cursor","no-drop");
+          $(".bx").attr("disabled",true);
           rot();
       }
     }
@@ -347,6 +359,13 @@
       document.getElementById('rad').value = rad;
       return save_t;
     }
+
+    function save_list(list, rad){
+      document.getElementById('list_save').value = list;
+      document.getElementById('rad_save').value = rad;
+      return save_t;
+    }
+
 
     </script>
   </body>
