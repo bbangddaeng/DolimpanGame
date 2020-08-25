@@ -142,7 +142,10 @@
       <input class = "button" type="button" value="빼기" onclick="
         if(chk()){
           cnt--;
-          if(t.length == 2){
+          if(t.length == 3){
+            ang = 0;
+          }
+          else if(t.length == 2){
             save_t = '';
             t[1][0] = '';
             drawChart();
@@ -160,6 +163,7 @@
       if(chk()){
         save_t = '';
         t.splice(2,t.length);t[1][0] = '';
+        ang = 0;
         drawChart();
         }"></input>
         <br>
